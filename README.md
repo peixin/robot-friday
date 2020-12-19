@@ -1,6 +1,9 @@
 ## `Friday` Robot for Team.
 
-**Office Assistant `Friday`** ![Friday Image](http://public-assets.liupei.xin/github/repos/robot-friday/friday-icon/android-icon-96x96.png)
+**Office Assistant `Friday`**
+ ![Friday Image](http://public-assets.liupei.xin/github/repos/robot-friday/friday-icon/android-icon-96x96.png)
+
+
 
 ### Capability
 
@@ -34,10 +37,18 @@
       e.g.
 ```
   name: workingDayOnWeekend
-  cron: 0 0 18 * * FRI,SAT *
+  cron syntax: 0 0 18 * * FRI,SAT *
   extra information: workingDayOnWeekend
   
   name: diff
-  cron: 0 0 14 * * * *
+  cron syntax: 0 0 14 * * * *
   extra information: diff
 ```
+
+
+
+### Reference
+
+- [crontab guru](https://crontab.guru/) 
+
+- [chinese-holidays-data](https://github.com/bastengao/chinese-holidays-data)
