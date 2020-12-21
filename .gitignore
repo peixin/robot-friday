@@ -246,3 +246,6 @@ $RECYCLE.BIN/
 
 
 node_modules/
+robot-friday-v*.tgz
+robot-friday-v*.zip
+package

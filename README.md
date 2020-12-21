@@ -14,11 +14,11 @@
 
 ### Setup
 
-- `yarn package`
+- `yarn run pack`
 
 - Tencent Cloud create SCF function
 
-- upload ./build/code.zip to scf function
+- upload `robot-friday-v${version}.zip` to scf function
 
 - 'Upload Method' select 'Install dependencies online'
 

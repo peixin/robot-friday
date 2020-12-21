@@ -6,7 +6,8 @@
   "repository": "git@github.com:peixin/robot-friday.git",
   "author": "liupeixin",
   "license": "MIT",
-  "scripts": {    
+  "scripts": {
+    "pack": "node ./scripts/pack.js"
   },
   "dependencies": {
     "axios": "^0.21.0",
