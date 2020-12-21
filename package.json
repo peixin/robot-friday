@@ -6,14 +6,16 @@
   "repository": "git@github.com:peixin/robot-friday.git",
   "author": "liupeixin",
   "license": "MIT",
-  "scripts": {
-    "package": "node ./scripts/package.js"
+  "scripts": {    
   },
   "dependencies": {
     "axios": "^0.21.0",
     "dayjs": "^1.9.7"
   },
-  "devDependencies": {
-    "archiver": "^5.1.0"
-  }
+  "devDependencies": {},
+  "files": [
+    "index.js",
+    "lib.js",
+    "chinese-holidays-data/data"
+  ]
 }

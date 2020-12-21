@@ -246,5 +246,3 @@ $RECYCLE.BIN/
 
 
 node_modules/
-build/
-!build/.gitkeep
