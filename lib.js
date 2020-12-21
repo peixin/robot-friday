@@ -5,7 +5,7 @@ const timezone = require("dayjs/plugin/timezone");
 
 const DATE_FORMAT = "YYYY-MM-DD";
 const DEFAULT_TIMEZONE = process.env.DEFAULT_TIMEZONE || "Asia/Shanghai";
-const HOLIDAY_DATA_PATH = "../chinese-holidays-data/data/${year}.json";
+const HOLIDAY_DATA_PATH = "./chinese-holidays-data/data/${year}.json";
 const ROBOT_KEY = process.env.ROBOT_KEY || "";
 const MENTIONED_MOBILE_LIST = (process.env.MENTIONED_MOBILE_LIST || "")
   .trim()
@@ -82,6 +82,7 @@ const postMessageToRobot = async (data) => {
   console.log("data:");
   console.log(data);
   const options = {
+    method: "post",
     baseURL: "https://qyapi.weixin.qq.com/cgi-bin/webhook",
     url: `/send`,
     params: {
@@ -89,7 +90,7 @@ const postMessageToRobot = async (data) => {
     },
     data,
   };
-  const { status } = await axios.post(options);
+  const { status } = await axios.request(options);
   return status === 200;
 };
 

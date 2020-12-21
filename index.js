@@ -12,7 +12,7 @@ const main = async (event, context) => {
   let message = null;
   let result = true;
 
-  if (event.TriggerName === "workingDayOnWeekend") {
+  if (event.Message === "workingDayOnWeekend") {
     const tomorrow = now.add(1, "day");
     if (checkIsWeekendWorkingDay(tomorrow)) {
       result = await postMessageToRobot(generateWeekendWorkingMessage());
@@ -20,7 +20,7 @@ const main = async (event, context) => {
     } else {
       message = "tomorrow is normal weekend.";
     }
-  } else if (event.TriggerName === "diff") {
+  } else if (event.Message === "diff") {
     if (checkIsWorkingDay(now)) {
       result = await postMessageToRobot(generateDiffMessage());
       message = "today is working day, diff.";

@@ -30,9 +30,8 @@
 - Set trigger
   
   * extra information
-    
-    * workingDayOnWeekend: remind if tomorrow is weekend but need to go to work
-  * diff: workday remind diff
+      * workingDayOnWeekend: remind if tomorrow is weekend but need to go to work
+      * diff: workday remind diff
     
       e.g.
 ```
