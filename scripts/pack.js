@@ -2,8 +2,8 @@ const path = require("path");
 const { execSync: execSyncOrigin } = require("child_process");
 
 const rootDir = path.dirname(__dirname);
-const info = require(path.join(rootDir, "package.json"));
-const packageFileName = `${info.name}-v${info.version}`;
+const { name, version } = require(path.join(rootDir, "package.json"));
+const packageFileName = `${name}-v${version}`;
 
 const showResult = (fn) => (...args) => {
   const result = fn(...args);

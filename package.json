@@ -7,13 +7,16 @@
   "author": "liupeixin",
   "license": "MIT",
   "scripts": {
-    "pack": "node ./scripts/pack.js"
+    "pack": "node ./scripts/pack.js",
+    "deploy": "node ./scripts/deploy.js"
   },
   "dependencies": {
     "axios": "^0.21.0",
     "dayjs": "^1.9.7"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "tencentcloud-sdk-nodejs": "^4.0.35"
+  },
   "files": [
     "index.js",
     "lib.js",

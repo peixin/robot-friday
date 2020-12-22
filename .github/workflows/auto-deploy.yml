@@ -1,0 +1,50 @@
+name: deploy scf
+on:
+  workflow_dispatch:
+    MANUAL_DEPLOY:
+      description: "Manual Deploy"
+      default: 'no'
+  push:
+    branches:
+        - master
+
+jobs:
+  deploy:
+    name: Auto Deploy
+    if: "github.event.head_commit.message == 'update chinese-holiday-data' || ${{ github.event
+    .inputs.MANUAL_DEPLOY }} == 'yes'"
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        submodules: true
+
+    - name: Use Node.js 12.x
+      uses: actions/setup-node@v1
+      with:
+        node-version: "12.x"
+
+    - name: Cache NPM dependencies
+      id: cache
+      uses: actions/cache@v1
+      with:
+        path: node_modules
+        key: ${{ runner.os }}-node-${{ hashFiles('**/package.json') }}
+        restore-keys: |
+          ${{ runner.os }}-node-${{ hashFiles('**/package.json') }}
+          ${{ runner.os }}-node-
+
+
+    - name: Install dependencies
+      if: steps.cache.outputs.cache-hit != 'true'
+      run: yarn install
+
+    - name: Package
+      run: yarn run pack && ls -al
+
+    - name: Deploy
+      env:
+        TENCENT_CLOUD_OPS_SECRET_ID: ${{ secrets.TENCENT_CLOUD_OPS_SECRET_ID }}
+        TENCENT_CLOUD_OPS_SECRET_KEY: ${{ secrets.TENCENT_CLOUD_OPS_SECRET_KEY }}
+      run: yarn run deploy
