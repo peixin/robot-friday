@@ -25,6 +25,7 @@
 - Set environment variable
   * DEFAULT_TIMEZONE=Asia/Shanghai
   * MENTIONED_MOBILE_LIST=phone num 1|phone num 2|...
+  * MENTIONED_LIST=user ID 1|user ID 2|...
   * ROBOT_KEY=xxx
 
 - Set trigger
@@ -47,6 +48,7 @@
 
 
 ### Reference
+- [WeChat Work Robot](https://work.weixin.qq.com/help?person_id=1&doc_id=13376)
 
 - [crontab guru](https://crontab.guru/) 
 

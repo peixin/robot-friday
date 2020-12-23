@@ -1,9 +1,10 @@
 name: deploy scf
 on:
   workflow_dispatch:
-    MANUAL_DEPLOY:
-      description: "Manual Deploy"
-      default: 'no'
+    inputs:
+      manualDeploy:
+        description: "Manual Deploy"
+        default: 'no'
   push:
     branches:
         - master
@@ -11,8 +12,7 @@ on:
 jobs:
   deploy:
     name: Auto Deploy
-    if: "github.event.head_commit.message == 'update chinese-holiday-data' || ${{ github.event
-    .inputs.MANUAL_DEPLOY }} == 'yes'"
+    if: "github.event.head_commit.message == 'update chinese-holiday-data' || github.event.inputs.manualDeploy == 'yes'"
     runs-on: ubuntu-latest
 
     steps:
@@ -41,7 +41,7 @@ jobs:
       run: yarn install
 
     - name: Package
-      run: yarn run pack && ls -al
+      run: yarn run pack && ls -al | grep *.zip
 
     - name: Deploy
       env:

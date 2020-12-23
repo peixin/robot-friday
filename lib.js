@@ -7,11 +7,6 @@ const DATE_FORMAT = "YYYY-MM-DD";
 const DEFAULT_TIMEZONE = process.env.DEFAULT_TIMEZONE || "Asia/Shanghai";
 const HOLIDAY_DATA_PATH = "./chinese-holidays-data/data/${year}.json";
 const ROBOT_KEY = process.env.ROBOT_KEY || "";
-const MENTIONED_MOBILE_LIST = (process.env.MENTIONED_MOBILE_LIST || "")
-  .trim()
-  .split("|")
-  .map((mobile) => mobile.trim())
-  .filter((mobile) => mobile);
 
 let holidayMap = null;
 
@@ -94,14 +89,33 @@ const postMessageToRobot = async (data) => {
   return status === 200;
 };
 
+const parseMention = (mentions) =>
+  (mentions || "")
+    .trim()
+    .split("|")
+    .map((mobile) => mobile.trim())
+    .filter((mobile) => mobile);
+
 const generateDiffMessage = () => {
-  return {
+  const mentionedMobileList = parseMention(process.env.MENTIONED_MOBILE_LIST);
+  const mentionedList = parseMention(process.env.MENTIONED_LIST);
+
+  const payload = {
     msgtype: "text",
     text: {
       content: "今天 diff 吗？",
-      mentioned_mobile_lists: MENTIONED_MOBILE_LIST,
     },
   };
+
+  if (mentionedMobileList.length) {
+    payload.text["mentioned_mobile_list"] = mentionedMobileList;
+  }
+
+  if (mentionedList.length) {
+    payload.text["mentioned_list"] = mentionedList;
+  }
+
+  return payload;
 };
 
 const generateWeekendWorkingMessage = () => {
@@ -119,5 +133,5 @@ module.exports = {
   checkIsWeekendWorkingDay,
   postMessageToRobot,
   generateDiffMessage,
-  generateWeekendWorkingMessage
+  generateWeekendWorkingMessage,
 };
