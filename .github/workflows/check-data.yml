@@ -2,8 +2,8 @@ name: update chinese-holiday-data
 on:
   workflow_dispatch:
   schedule:
-    - cron:  '0 0 28,*/15 * *'
-  
+    - cron: "0 0 28,*/15 * *"
+
 jobs:
   build:
     name: update
@@ -15,15 +15,25 @@ jobs:
       - name: Update submodule
         run: |
           git submodule update --remote
-      
+
       - name: Commit files
+        id: commitFiles
         run: |
           git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git config --local user.name "GitHub Action"
-          git commit -am "update chinese-holiday-data" || echo "Nothing to update"
-      
+          git commit -am "update chinese-holiday-data" || echo "Nothing to update"; echo "::set-output name=committed::'true'"
+
       - name: Push changes
+        if: steps.commitFiles.outputs.committed == 'true'
         uses: ad-m/github-push-action@master
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           branch: ${{ github.ref }}
+
+      - name: Sending message
+        if: steps.commitFiles.outputs.committed == 'true'
+        uses: yakumioto/serverchan-action@v1
+        with:
+          key: ${{ secrets.SERVER_CHAN_SCKEY }}
+          text: "chinese-holiday-data updated"
+          desp: ""
