@@ -14,6 +14,11 @@ dayjs.extend(utc);
 dayjs.extend(timezone);
 dayjs.tz.setDefault(DEFAULT_TIMEZONE);
 
+const sample = (array) => {
+  const length = array == null ? 0 : array.length;
+  return length ? array[Math.floor(Math.random() * length)] : undefined;
+};
+
 const getHolidayData = (localDate) => {
   if (holidayMap) {
     return holidayMap;
@@ -66,6 +71,20 @@ const checkIsWorkingDay = (localDate) => {
   return isWorkingDay;
 };
 
+const checkIsHolidayFirstDay = (localDate) => {
+  const holidayMap = getHolidayData(localDate);
+  const date = localDate.format(DATE_FORMAT);
+  const dateWithHoliday = holidayMap[date];
+  if (
+    dateWithHoliday &&
+    dateWithHoliday.type === "holiday" &&
+    dateWithHoliday.range[0] === date
+  ) {
+    return dateWithHoliday.name;
+  }
+  return null;
+};
+
 const checkIsWeekendWorkingDay = (localDate) => {
   const isWorkingDay = checkIsWorkingDay(localDate);
   const isWeekend = checkIsWeekend(localDate);
@@ -75,7 +94,7 @@ const checkIsWeekendWorkingDay = (localDate) => {
 
 const postMessageToRobot = async (data) => {
   console.log("data:");
-  console.log(data);
+  console.log(JSON.stringify(data));
   const options = {
     method: "post",
     baseURL: "https://qyapi.weixin.qq.com/cgi-bin/webhook",
@@ -128,10 +147,51 @@ const generateWeekendWorkingMessage = () => {
   };
 };
 
+const generateHolidayGreeting = (holidayName) => {
+  let greeting = "快乐";
+
+  if (["清明节", "端午节"].includes(holidayName)) {
+    greeting = "安康";
+  }
+
+  let jsonData = [];
+  try {
+    jsonData = require("./holidays-info.json");
+  } catch {
+    console.warn(`no holidays-info.json`);
+  }
+
+  const holidayInfo = jsonData.find((info) => info.name === holidayName);
+  if (!holidayInfo) {
+    return {
+      msgtype: "text",
+      text: {
+        content: `${holidayName}${greeting}`,
+      },
+    };
+  } else {
+    return {
+      msgtype: "news",
+      news: {
+        articles: [
+          {
+            title: `${holidayName}${greeting}`,
+            description: sample(holidayInfo.desc),
+            url: holidayInfo.link,
+            picurl: holidayInfo.pic,
+          },
+        ],
+      },
+    };
+  }
+};
+
 module.exports = {
   checkIsWorkingDay,
   checkIsWeekendWorkingDay,
   postMessageToRobot,
   generateDiffMessage,
   generateWeekendWorkingMessage,
+  checkIsHolidayFirstDay,
+  generateHolidayGreeting,
 };
