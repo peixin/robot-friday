@@ -32,8 +32,8 @@ jobs:
 
       - name: Sending message
         if: steps.commitFiles.outputs.committed == 'true'
-        uses: yakumioto/serverchan-action@v1
+        uses: peixin/serverchan-action@v2.1
         with:
           key: ${{ secrets.SERVER_CHAN_SCKEY }}
-          text: "chinese-holiday-data updated"
+          title: "chinese-holiday-data updated"
           desp: ""

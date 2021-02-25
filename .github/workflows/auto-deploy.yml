@@ -49,8 +49,8 @@ jobs:
         run: yarn run deploy
 
       - name: Sending message
-        uses: yakumioto/serverchan-action@v1
+        uses: peixin/serverchan-action@v2.1
         with:
           key: ${{ secrets.SERVER_CHAN_SCKEY }}
-          text: "Deployed to Tencent Cloud SCF"
+          title: "Deployed to Tencent Cloud SCF"
           desp: ""
