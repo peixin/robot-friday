@@ -1,6 +1,6 @@
 {
   "name": "robot-friday",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "robot-friday",
   "main": "index.js",
   "repository": "git@github.com:peixin/robot-friday.git",

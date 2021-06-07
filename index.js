@@ -7,6 +7,7 @@ const {
   generateDiffMessage,
   generateWeekendWorkingMessage,
   generateHolidayGreeting,
+  generateStandUpMeetingMessage,
 } = require("./lib.js");
 
 const main = async (event, context) => {
@@ -38,8 +39,17 @@ const main = async (event, context) => {
     } else {
       message = "today is not holiday first day.";
     }
+  } else if (event.Message === "StandUpMeeting") {
+    if (checkIsWorkingDay(now)) {
+      result = await postMessageToRobot(await generateStandUpMeetingMessage());
+      message = "today is working day, stand up meeting.";
+    } else {
+      message = "today is not working day.";
+    }
   }
   return { result, message };
 };
+
+// main({ Message: "StandUpMeeting" });
 
 module.exports = { main };

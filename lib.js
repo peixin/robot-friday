@@ -137,6 +137,47 @@ const generateDiffMessage = () => {
   return payload;
 };
 
+const getBingDailyImage = async () => {
+  const { data } = await axios.get(
+    "http://bing.getlove.cn/latelyBingImageStory"
+  );
+  const image = data[0];
+  if (image) {
+    return {
+      picurl: `https://www.bing.com${image["url"]}`,
+      url: `https://www.bing.com${image["copyrightLink"]}`,
+      description: image["copyright"],
+    };
+  } else {
+    return {
+      picurl:
+        "https://img1.baidu.com/it/u=3070195245,3772896671&fm=26&fmt=auto&gp=0.jpg",
+      url: "https://en.wikipedia.org/wiki/Stand-up_meeting",
+      description:
+        'A stand-up meeting (or simply "stand-up") is a meeting in which attendees typically participate while standing. The discomfort of standing for long periods is intended to keep the meetings short.',
+    };
+  }
+};
+
+const generateStandUpMeetingMessage = async () => {
+  const imageInfo = await getBingDailyImage();
+
+  const payload = {
+    msgtype: "news",
+    news: {
+      articles: [
+        {
+          title: "站会了!",
+          url: imageInfo.url,
+          picurl: imageInfo.picurl,
+          description: imageInfo.description,
+        },
+      ],
+    },
+  };
+  return payload;
+};
+
 const generateWeekendWorkingMessage = () => {
   return {
     msgtype: "text",
@@ -194,4 +235,5 @@ module.exports = {
   generateWeekendWorkingMessage,
   checkIsHolidayFirstDay,
   generateHolidayGreeting,
+  generateStandUpMeetingMessage,
 };
