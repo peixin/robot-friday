@@ -138,15 +138,21 @@ const generateDiffMessage = () => {
 };
 
 const getBingDailyImage = async () => {
-  const { data } = await axios.get(
-    "http://bing.getlove.cn/latelyBingImageStory"
-  );
-  const image = data[0];
-  if (image) {
+  let imageInfo = null;
+  try {
+    const { data } = await axios.get(
+      "https://www.bing.com/HPImageArchive.aspx?format=js&idx=0&n=1&mkt=zh-CN"
+    );
+    imageInfo = data["images"][0];
+  } catch (e) {
+    console.error(e);
+  }
+
+  if (imageInfo) {
     return {
-      picurl: `https://www.bing.com${image["url"]}`,
-      url: `https://www.bing.com${image["copyrightLink"]}`,
-      description: image["copyright"],
+      picurl: `https://www.bing.com${imageInfo["url"]}`,
+      url: imageInfo["copyrightlink"],
+      description: imageInfo["copyright"],
     };
   } else {
     return {
