@@ -8,13 +8,21 @@
   "license": "MIT",
   "scripts": {
     "pack": "node ./scripts/pack.js",
-    "deploy": "node ./scripts/deploy.js"
+    "deploy": "node ./scripts/deploy.js",
+    "commit": "cz",
+    "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s -r 0"
   },
   "dependencies": {
     "axios": "^0.21.0",
     "dayjs": "^1.9.7"
   },
   "devDependencies": {
+    "@commitlint/cli": "^12.1.4",
+    "@commitlint/config-conventional": "^12.1.4",
+    "commitizen": "^4.2.4",
+    "conventional-changelog-cli": "^2.1.1",
+    "cz-conventional-changelog": "3.3.0",
+    "husky": "^6.0.0",
     "tencentcloud-sdk-nodejs": "^4.0.35"
   },
   "files": [
@@ -22,5 +30,10 @@
     "lib.js",
     "holidays-info.json",
     "chinese-holidays-data/data"
-  ]
+  ],
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
+  }
 }
