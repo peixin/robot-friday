@@ -150,7 +150,10 @@ const getBingDailyImage = async () => {
 
   if (imageInfo) {
     return {
-      picurl: `https://www.bing.com${imageInfo["url"]}`,
+      picurl: `https://www.bing.com${imageInfo["url"]}`.replace(
+        /1920x1080/g,
+        "1024x768"
+      ),
       url: imageInfo["copyrightlink"],
       description: imageInfo["copyright"],
     };
