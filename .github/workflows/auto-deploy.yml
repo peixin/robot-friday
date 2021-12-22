@@ -46,6 +46,7 @@ jobs:
         env:
           TENCENT_CLOUD_OPS_SECRET_ID: ${{ secrets.TENCENT_CLOUD_OPS_SECRET_ID }}
           TENCENT_CLOUD_OPS_SECRET_KEY: ${{ secrets.TENCENT_CLOUD_OPS_SECRET_KEY }}
+          TENCENT_CLOUD_SCF_NAME: ${{ secrets.TENCENT_CLOUD_SCF_NAME }}
         run: yarn run deploy
 
       - name: Sending message

@@ -1,3 +1,4 @@
+require("dotenv").config();
 const dayjs = require("dayjs");
 const {
   postMessageToRobot,
@@ -47,6 +48,7 @@ const main = async (event, context) => {
       message = "today is not working day.";
     }
   }
+  console.log(`${result}:${message}`);
   return { result, message };
 };
 
