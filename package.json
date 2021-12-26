@@ -28,9 +28,14 @@
   },
   "files": [
     "index.js",
-    "lib.js",
+    "constant.js",
+    "constant.js",
+    "message.js",
+    "utils.js",
+    "service.js",
     "holidays-info.json",
-    "chinese-holidays-data/data"
+    "chinese-holidays-data/data",
+    "platform"
   ],
   "config": {
     "commitizen": {
